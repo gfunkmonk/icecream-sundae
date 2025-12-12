@@ -33,6 +33,7 @@
 
 #include "main.hpp"
 #include "draw.hpp"
+#include "all_colors.hpp"
 
 class Column;
 
@@ -854,18 +855,24 @@ void NCursesInterface::init()
     keypad(stdscr, TRUE);
 
     Host::clearColors();
-    Host::addColor(assign_color(COLOR_RED, -1));
-    Host::addColor(assign_color(COLOR_YELLOW, -1));
-    Host::addColor(assign_color(COLOR_BLUE, -1));
-    Host::addColor(assign_color(COLOR_MAGENTA, -1));
-    Host::addColor(assign_color(COLOR_CYAN, -1));
-    Host::addColor(assign_color(COLOR_WHITE, -1));
+    //Host::addColor(assign_color(COLOR_RED, -1));
+    //Host::addColor(assign_color(COLOR_YELLOW, -1));
+    //Host::addColor(assign_color(COLOR_BLUE, -1));
+    //Host::addColor(assign_color(COLOR_MAGENTA, -1));
+    //Host::addColor(assign_color(COLOR_CYAN, -1));
+    //Host::addColor(assign_color(COLOR_WHITE, -1));
+    unsigned color_id = 8;  // The last ncurses predefined color
+    for (auto color: all_colors) {
+        init_color(color_id, std::get<0>(color), std::get<1>(color), std::get<2>(color));
+        Host::addColor(assign_color(color_id, -1));
+        color_id++;
+    }
 
-    Host::setLocalhostColor(assign_color(COLOR_GREEN, -1));
+    Host::setLocalhostColor(assign_color(COLOR_RED, -1));
 
-    header_color = assign_color(COLOR_BLACK, COLOR_GREEN);
-    expand_color = assign_color(COLOR_GREEN, -1);
-    highlight_color = assign_color(COLOR_BLACK, COLOR_CYAN);
+    header_color = assign_color(COLOR_BLACK, COLOR_YELLOW);
+    expand_color = assign_color(COLOR_CYAN, -1);
+    highlight_color = assign_color(COLOR_BLACK, COLOR_MAGENTA);
 
     redraw_source.set(g_timeout_add(1000, on_redraw_timer, this));
 
