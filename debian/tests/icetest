@@ -1,0 +1,5 @@
+#!/bin/sh
+set -e
+
+icecream-sundae --help
+TERM=vt100 icecream-sundae --simulate --sim-cycles 150 --sim-speed 100

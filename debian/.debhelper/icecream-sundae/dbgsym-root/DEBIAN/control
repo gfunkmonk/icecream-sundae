@@ -1,0 +1,14 @@
+Package: icecream-sundae-dbgsym
+Package-Type: ddeb
+Source: icecream-sundae
+Version: 1.1.0-1
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Installed-Size: 901
+Depends: icecream-sundae (= 1.1.0-1)
+Section: debug
+Priority: optional
+Description: debug symbols for icecream-sundae
+Build-Ids: ef6428ab38106d52fc38494daa0665195b51183e
+Original-Maintainer: Anton Gladky <gladk@debian.org>

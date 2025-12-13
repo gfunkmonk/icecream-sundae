@@ -1,0 +1,13 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Contact: https://github.com/JPEWdev/icecream-sundae
+Source: https://github.com/JPEWdev/icecream-sundae
+Files-Excluded:
+  .travis
+  ci
+  .dockerignore
+
+Files: *
+Copyright: Copyright (C) 2018 by Garmin Ltd. or its subsidiaries
+License: GPL-2+
+ On Debian systems, the complete text of the GNU General Public
+ License, version 2, can be found in /usr/share/common-licenses/GPL-2.

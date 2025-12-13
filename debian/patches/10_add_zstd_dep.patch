@@ -1,0 +1,20 @@
+Description: Add the dependency on zstd
+Author: Anton Gladky <gladk@debian.org>
+Bug-Debian: https://bugs.debian.org/951932
+Last-Update: 2020-03-21
+
+Index: icecream-sundae/meson.build
+===================================================================
+--- icecream-sundae.orig/meson.build
++++ icecream-sundae/meson.build
+@@ -15,8 +15,9 @@ ncurses = dependency('ncursesw')
+ cxx = meson.get_compiler('cpp')
+ 
+ libdl = cxx.find_library('dl')
++libzstd = cxx.find_library('zstd')
+ 
+-deps = [icecc, glib, ncurses, libdl]
++deps = [icecc, glib, ncurses, libdl, libzstd]
+ 
+ code = '''
+ #include <icecc/comm.h>

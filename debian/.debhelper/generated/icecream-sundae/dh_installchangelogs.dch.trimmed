@@ -1,0 +1,35 @@
+icecream-sundae (1.1.0-1) UNRELEASED; urgency=medium
+
+  * update
+
+ -- root <root@bitch.srv>  Fri, 12 Dec 2025 18:53:28 -0500
+
+icecream-sundae (1.0.0-3build2) noble; urgency=medium
+
+  * No-change rebuild for CVE-2024-3094
+
+ -- William Grant <wgrant@ubuntu.com>  Mon, 01 Apr 2024 16:54:33 +1100
+
+icecream-sundae (1.0.0-3build1) noble; urgency=medium
+
+  * No-change rebuild against libglib2.0-0t64
+
+ -- Steve Langasek <steve.langasek@ubuntu.com>  Fri, 08 Mar 2024 05:07:49 +0000
+
+icecream-sundae (1.0.0-3) unstable; urgency=medium
+
+  * [f532252] Set TERM env-variable to fix autopkgtest
+
+ -- Anton Gladky <gladk@debian.org>  Sun, 22 Mar 2020 21:48:06 +0100
+
+icecream-sundae (1.0.0-2) unstable; urgency=medium
+
+  * [db5c650] Update the license to GPL-2+
+  * [39a3460] Add dependency on zstd. (Closes: #951932)
+  * [e4e07f6] Set Standards-Version to 4.5.0
+  * [bea71f6] Set compat-level to 12
+  * [e0db475] Set upstream metadata fields: Bug-Database, Bug-Submit, Repository, Repository-Browse.
+  * [6a197f1] Use canonical URL in Vcs-Browser.
+  * [6986e5f] Add autopgtest
+
+ -- Anton Gladky <gladk@debian.org>  Sat, 21 Mar 2020 20:40:07 +0100
