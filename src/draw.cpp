@@ -868,11 +868,15 @@ void NCursesInterface::init()
         color_id++;
     }
 
-    Host::setLocalhostColor(assign_color(COLOR_RED, -1));
+    //Host::setLocalhostColor(assign_color(COLOR_RED, -1));
+    Host::setLocalhostColor(assign_color(128, -1));
 
-    header_color = assign_color(COLOR_BLACK, COLOR_YELLOW);
-    expand_color = assign_color(COLOR_CYAN, -1);
-    highlight_color = assign_color(COLOR_BLACK, COLOR_MAGENTA);
+    //header_color = assign_color(COLOR_BLACK, COLOR_YELLOW);
+    //expand_color = assign_color(COLOR_CYAN, -1);
+    //highlight_color = assign_color(COLOR_BLACK, COLOR_MAGENTA);
+    header_color = assign_color(COLOR_BLACK, 8);
+    expand_color = assign_color(67, -1);
+    highlight_color = assign_color(COLOR_BLACK, 117);
 
     redraw_source.set(g_timeout_add(1000, on_redraw_timer, this));
 
