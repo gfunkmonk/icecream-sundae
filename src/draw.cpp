@@ -950,15 +950,16 @@ void NCursesInterface::init()
     }
 
     //Host::setLocalhostColor(assign_color(COLOR_RED, -1));
-    Host::setLocalhostColor(assign_color(128, -1));
+    Host::setLocalhostColor(assign_color(9, -1)); //Light Red
 
     //header_color = assign_color(COLOR_BLACK, COLOR_YELLOW);
     //expand_color = assign_color(COLOR_CYAN, -1);
     //highlight_color = assign_color(COLOR_BLACK, COLOR_MAGENTA);
-    header_color = assign_color(COLOR_BLACK, 8);
-    expand_color = assign_color(67, -1);
-    highlight_color = assign_color(COLOR_BLACK, 117);
+    header_color = assign_color(COLOR_WHITE, 8); //Dark Grey
+    expand_color = assign_color(11, -1); //Light Yellow
+    highlight_color = assign_color(COLOR_BLACK, 107); //Pale Green
 
+    redraw_source.set(g_timeout_add(1000, on_redraw_timer, this));
     redraw_source.set(g_timeout_add(1000, on_redraw_timer, this));
 
     triggerRedraw();
