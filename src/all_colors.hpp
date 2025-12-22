@@ -35,12 +35,15 @@ constexpr std::initializer_list<std::tuple<char, char, char>> all_colors = {
     std::tuple<char, char, char>{222, 184, 135}, // burlywood
     std::tuple<char, char, char>{95, 158, 160}, // cadetblue
     std::tuple<char, char, char>{255, 255, 153}, // canary
+    std::tuple<char, char, char>{193, 154, 107}, // camel
     std::tuple<char, char, char>{127, 255, 0}, // chartreuse
     std::tuple<char, char, char>{210, 105, 30}, // chocolate
+    std::tuple<char, char, char>{111, 78, 55}, // coffee
     std::tuple<char, char, char>{140, 146, 172}, // coolgrey
     std::tuple<char, char, char>{255, 127, 80}, // coral
     std::tuple<char, char, char>{100, 149, 237}, // cornflowerblue
     std::tuple<char, char, char>{255, 248, 220}, // cornsilk
+    std::tuple<char, char, char>{255, 253, 208}, // cream
     std::tuple<char, char, char>{220, 20, 60}, // crimson
     std::tuple<char, char, char>{0, 255, 255}, // cyan
     std::tuple<char, char, char>{0, 0, 139}, // darkblue
@@ -87,6 +90,7 @@ constexpr std::initializer_list<std::tuple<char, char, char>> all_colors = {
     std::tuple<char, char, char>{255, 255, 240}, // ivory
     std::tuple<char, char, char>{189, 218, 87}, // junebud
     std::tuple<char, char, char>{240, 230, 140}, // khaki
+    std::tuple<char, char, char>{142, 235, 236}, // lagoon
     std::tuple<char, char, char>{230, 230, 250}, // lavender
     std::tuple<char, char, char>{255, 240, 245}, // lavenderblush
     std::tuple<char, char, char>{124, 252, 0}, // lawngreen
@@ -126,6 +130,7 @@ constexpr std::initializer_list<std::tuple<char, char, char>> all_colors = {
     std::tuple<char, char, char>{255, 228, 181}, // moccasin
     std::tuple<char, char, char>{255, 222, 173}, // navajowhite
     std::tuple<char, char, char>{0, 0, 128}, // navy
+    std::tuple<char, char, char>{204, 119, 34}, // ochre
     std::tuple<char, char, char>{253, 245, 230}, // oldlace
     std::tuple<char, char, char>{128, 128, 0}, // olive
     std::tuple<char, char, char>{107, 142, 35}, // olivedrab
@@ -141,7 +146,6 @@ constexpr std::initializer_list<std::tuple<char, char, char>> all_colors = {
     std::tuple<char, char, char>{255, 218, 185}, // peachpuff
     std::tuple<char, char, char>{205, 133, 63}, // peru
     std::tuple<char, char, char>{255, 192, 203}, // pink
-    std::tuple<char, char, char>{255, 105, 180}, // hotpink
     std::tuple<char, char, char>{221, 160, 221}, // plum
     std::tuple<char, char, char>{176, 224, 230}, // powderblue
     std::tuple<char, char, char>{128, 0, 128}, // purple
@@ -164,11 +168,13 @@ constexpr std::initializer_list<std::tuple<char, char, char>> all_colors = {
     std::tuple<char, char, char>{0, 255, 127}, // springgreen
     std::tuple<char, char, char>{70, 130, 180}, // steelblue
     std::tuple<char, char, char>{210, 180, 140}, // tan
+    std::tuple<char, char, char>{204, 78, 0}, // tawny
     std::tuple<char, char, char>{0, 128, 128}, // teal
     std::tuple<char, char, char>{216, 191, 216}, // thistle
     std::tuple<char, char, char>{255, 99, 71}, // tomato
     std::tuple<char, char, char>{64, 224, 208}, // turquoise
     std::tuple<char, char, char>{238, 130, 238}, // violet
+    std::tuple<char, char, char>{138, 43, 226}, // violetblue
     std::tuple<char, char, char>{245, 222, 179}, // wheat
     std::tuple<char, char, char>{255, 255, 255}, // white
     std::tuple<char, char, char>{245, 245, 245}, // whitesmoke

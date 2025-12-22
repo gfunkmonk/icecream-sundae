@@ -32,6 +32,7 @@
 #include <glib-unix.h>
 #include <math.h>
 #include <ncurses.h>
+#include <cstdlib>
 
 #include "main.hpp"
 #include "draw.hpp"
@@ -950,16 +951,39 @@ void NCursesInterface::init()
     }
 
     //Host::setLocalhostColor(assign_color(COLOR_RED, -1));
-    Host::setLocalhostColor(assign_color(9, -1)); //Light Red
+    if (const char* sundae_local_color_char = getenv("SUNDAE_LOCAL_COLOR")) {
+      int sundae_local_color = std::atoi(sundae_local_color_char);
+      Host::setLocalhostColor(assign_color(sundae_local_color, -1));
+    } else {
+      Host::setLocalhostColor(assign_color(9, -1)); //Light Red
+    }
 
     //header_color = assign_color(COLOR_BLACK, COLOR_YELLOW);
     //expand_color = assign_color(COLOR_CYAN, -1);
     //highlight_color = assign_color(COLOR_BLACK, COLOR_MAGENTA);
-    header_color = assign_color(COLOR_WHITE, 8); //Dark Grey
-    expand_color = assign_color(11, -1); //Light Yellow
-    highlight_color = assign_color(COLOR_BLACK, 107); //Pale Green
+    if (const char* sundae_header_bg_char = getenv("SUNDAE_HEADER_BG")) {
+      int sundae_header_bg = std::atoi(sundae_header_bg_char);
+      if (const char* sundae_header_fg_char = getenv("SUNDAE_HEADER_FG")) {
+        int sundae_header_fg = std::atoi(sundae_header_fg_char);
+        header_color = assign_color(sundae_header_fg, sundae_header_bg);
+      }
+    } else {
+      header_color = assign_color(81, 8); //Light Cyan on Dark Grey
+    }
+    if (const char* sundae_expand_color_char = getenv("SUNDAE_EXPAND_COLOR")) {
+      int sundae_expand_color = std::atoi(sundae_expand_color_char);
+      expand_color = assign_color(sundae_expand_color, -1);
+    } else {
+      expand_color = assign_color(101, -1); //Brownish
+    }
 
-    redraw_source.set(g_timeout_add(1000, on_redraw_timer, this));
+    if (const char* sundae_highlight_color_char = getenv("SUNDAE_HIGHLIGHT_COLOR")) {
+      int sundae_highlight_color = std::atoi(sundae_highlight_color_char);
+      highlight_color = assign_color(COLOR_BLACK, sundae_highlight_color);
+    } else {
+      highlight_color = assign_color(COLOR_BLACK, 107); //Pale Green
+    }
+
     redraw_source.set(g_timeout_add(1000, on_redraw_timer, this));
 
     triggerRedraw();
