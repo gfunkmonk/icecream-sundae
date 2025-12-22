@@ -923,6 +923,11 @@ void NCursesInterface::triggerRedraw()
         idle_source.set(g_idle_add(reinterpret_cast<GSourceFunc>(on_idle_draw), this));
 }
 
+int get_env_int(const char* var_name, int default_val) {
+    const char* val = std::getenv(var_name);
+    return val ? std::atoi(val) : default_val;
+}
+
 void NCursesInterface::init()
 {
     initscr();
@@ -944,48 +949,12 @@ void NCursesInterface::init()
         color_id++;
     }
 
-int sundae_local_color;
-int sundae_header_bg;
-int sundae_header_fg;
-int sundae_expand_color;
-int sundae_highlight_color;
-int sundae_highlight_text;
-
-    if (const char* sundae_local_color_char = getenv("SUNDAE_LOCAL_COLOR")) {
-      sundae_local_color = std::atoi(sundae_local_color_char);
-    } else {
-      sundae_local_color = 2;
-    }
-
-    if (const char* sundae_header_bg_char = getenv("SUNDAE_HEADER_BG")) {
-      sundae_header_bg = std::atoi(sundae_header_bg_char);
-    } else {
-      sundae_header_bg = 2;
-    }
-
-    if (const char* sundae_header_fg_char = getenv("SUNDAE_HEADER_FG")) {
-      sundae_header_fg = std::atoi(sundae_header_fg_char);
-    } else {
-      sundae_header_fg = 16;
-    }
-
-    if (const char* sundae_expand_color_char = getenv("SUNDAE_EXPAND_COLOR")) {
-      sundae_expand_color = std::atoi(sundae_expand_color_char);
-    } else {
-      sundae_expand_color = 2;
-    }
-
-    if (const char* sundae_highlight_color_char = getenv("SUNDAE_HIGHLIGHT_COLOR")) {
-      sundae_highlight_color = std::atoi(sundae_highlight_color_char);
-    } else {
-      sundae_highlight_color = 6;
-    }
-
-    if (const char* sundae_highlight_text_char = getenv("SUNDAE_HIGHLIGHT_TEXT")) {
-      sundae_highlight_text = std::atoi(sundae_highlight_text_char);
-    } else {
-      sundae_highlight_text = 16;
-    }
+    int sundae_local_color     = get_env_int("SUNDAE_LOCAL_COLOR", 2);
+    int sundae_header_bg       = get_env_int("SUNDAE_HEADER_BG", 2);
+    int sundae_header_fg       = get_env_int("SUNDAE_HEADER_FG", 16);
+    int sundae_expand_color    = get_env_int("SUNDAE_EXPAND_COLOR", 2);
+    int sundae_highlight_color = get_env_int("SUNDAE_HIGHLIGHT_COLOR", 6);
+    int sundae_highlight_text  = get_env_int("SUNDAE_HIGHLIGHT_TEXT", 16);
 
     Host::setLocalhostColor(assign_color(sundae_local_color, -1));
     header_color = assign_color(sundae_header_fg, sundae_header_bg);
