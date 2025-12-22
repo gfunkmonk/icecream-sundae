@@ -937,12 +937,6 @@ void NCursesInterface::init()
     keypad(stdscr, TRUE);
 
     Host::clearColors();
-    //Host::addColor(assign_color(COLOR_RED, -1));
-    //Host::addColor(assign_color(COLOR_YELLOW, -1));
-    //Host::addColor(assign_color(COLOR_BLUE, -1));
-    //Host::addColor(assign_color(COLOR_MAGENTA, -1));
-    //Host::addColor(assign_color(COLOR_CYAN, -1));
-    //Host::addColor(assign_color(COLOR_WHITE, -1));
     unsigned color_id = 8;  // The last ncurses predefined color
     for (auto color: all_colors) {
         init_color(color_id, std::get<0>(color), std::get<1>(color), std::get<2>(color));
@@ -950,39 +944,53 @@ void NCursesInterface::init()
         color_id++;
     }
 
-    //Host::setLocalhostColor(assign_color(COLOR_RED, -1));
+int sundae_local_color;
+int sundae_header_bg;
+int sundae_header_fg;
+int sundae_expand_color;
+int sundae_highlight_color;
+int sundae_highlight_text;
+
     if (const char* sundae_local_color_char = getenv("SUNDAE_LOCAL_COLOR")) {
-      int sundae_local_color = std::atoi(sundae_local_color_char);
-      Host::setLocalhostColor(assign_color(sundae_local_color, -1));
+      sundae_local_color = std::atoi(sundae_local_color_char);
     } else {
-      Host::setLocalhostColor(assign_color(9, -1)); //Light Red
+      sundae_local_color = 2;
     }
 
-    //header_color = assign_color(COLOR_BLACK, COLOR_YELLOW);
-    //expand_color = assign_color(COLOR_CYAN, -1);
-    //highlight_color = assign_color(COLOR_BLACK, COLOR_MAGENTA);
     if (const char* sundae_header_bg_char = getenv("SUNDAE_HEADER_BG")) {
-      int sundae_header_bg = std::atoi(sundae_header_bg_char);
-      if (const char* sundae_header_fg_char = getenv("SUNDAE_HEADER_FG")) {
-        int sundae_header_fg = std::atoi(sundae_header_fg_char);
-        header_color = assign_color(sundae_header_fg, sundae_header_bg);
-      }
+      sundae_header_bg = std::atoi(sundae_header_bg_char);
     } else {
-      header_color = assign_color(81, 8); //Light Cyan on Dark Grey
+      sundae_header_bg = 2;
     }
-    if (const char* sundae_expand_color_char = getenv("SUNDAE_EXPAND_COLOR")) {
-      int sundae_expand_color = std::atoi(sundae_expand_color_char);
-      expand_color = assign_color(sundae_expand_color, -1);
+
+    if (const char* sundae_header_fg_char = getenv("SUNDAE_HEADER_FG")) {
+      sundae_header_fg = std::atoi(sundae_header_fg_char);
     } else {
-      expand_color = assign_color(101, -1); //Brownish
+      sundae_header_fg = 16;
+    }
+
+    if (const char* sundae_expand_color_char = getenv("SUNDAE_EXPAND_COLOR")) {
+      sundae_expand_color = std::atoi(sundae_expand_color_char);
+    } else {
+      sundae_expand_color = 2;
     }
 
     if (const char* sundae_highlight_color_char = getenv("SUNDAE_HIGHLIGHT_COLOR")) {
-      int sundae_highlight_color = std::atoi(sundae_highlight_color_char);
-      highlight_color = assign_color(COLOR_BLACK, sundae_highlight_color);
+      sundae_highlight_color = std::atoi(sundae_highlight_color_char);
     } else {
-      highlight_color = assign_color(COLOR_BLACK, 107); //Pale Green
+      sundae_highlight_color = 6;
     }
+
+    if (const char* sundae_highlight_text_char = getenv("SUNDAE_HIGHLIGHT_TEXT")) {
+      sundae_highlight_text = std::atoi(sundae_highlight_text_char);
+    } else {
+      sundae_highlight_text = 16;
+    }
+
+    Host::setLocalhostColor(assign_color(sundae_local_color, -1));
+    header_color = assign_color(sundae_header_fg, sundae_header_bg);
+    expand_color = assign_color(sundae_expand_color, -1);
+    highlight_color = assign_color(sundae_highlight_text, sundae_highlight_color);
 
     redraw_source.set(g_timeout_add(1000, on_redraw_timer, this));
 
