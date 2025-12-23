@@ -1,11 +1,6 @@
 # icecream-sundae
 Commandline Monitor for [Icecream](https://github.com/icecc/icecream).
 
-[![Build Status](https://travis-ci.org/JPEWdev/icecream-sundae.svg?branch=master)](https://travis-ci.org/JPEWdev/icecream-sundae)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9e75106b1701452488d361efe2d1ad88)](https://www.codacy.com/app/JPEWdev/icecream-sundae?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JPEWdev/icecream-sundae&amp;utm_campaign=Badge_Grade)
-[![Coverage Status](https://coveralls.io/repos/github/JPEWdev/icecream-sundae/badge.svg?branch=master)](https://coveralls.io/github/JPEWdev/icecream-sundae?branch=master)
-[![Snap Status](https://build.snapcraft.io/badge/JPEWdev/icecream-sundae.svg)](https://build.snapcraft.io/user/JPEWdev/icecream-sundae)
-
 ![Icecream Sundae Demo](/images/demo.gif)
 
 # Installation
@@ -21,42 +16,14 @@ Commandline Monitor for [Icecream](https://github.com/icecc/icecream).
 * [meson](http://mesonbuild.com/)
 * [ninja](https://ninja-build.org/)
 
-### Fedora 27 & 28
+### Fedora
 ```shell
 sudo dnf install gcc-c++ glib2-devel icecream-devel meson ncurses-devel ninja-build
 ```
 
-### Ubuntu 17.10 (Artful Aardvark) & 18.04 (Bionic Beaver)
+### Ubuntu/Debian
 ```shell
 sudo apt-get install g++ libcap-ng-dev libglib2.0-dev libicecc-dev liblzo2-dev libncursesw5-dev meson ninja-build
-```
-
-### Ubuntu 16.04 (Xenial Xerus)
-This version of Ubuntu requires a newer version of meson:
-
-```shell
-sudo apt-get install g++ libcap-ng-dev libglib2.0-dev libicecc-dev liblzo2-dev libncursesw5-dev meson python3-pip ninja-build
-pip3 install --user meson
-```
-
-### Ubuntu 14.04 (Trusty Tahr)
-While it is possible to install on this ancient version of Ubuntu, it requires a lot of work:
-
-```shell
-sudo add-apt-repository ppa:jonathonf/python-3.5
-sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-sudo add-apt-repository ppa:jonathonf/binutils
-
-sudo apt-get update
-
-sudo apt-get install g++-6 libcap-ng-dev libglib2.0-dev libicecc-dev liblzo2-dev libncursesw5-dev python3-pip python3.5 wget unzip
-
-wget https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-linux.zip -O ninja-linux.zip
-sudo unzip ninja-linux.zip -d /usr/local/bin
-
-python3.5 -m pip install --user meson
-
-export CXX=g++-6
 ```
 
 ### macOS
@@ -75,8 +42,6 @@ meson .. --buildtype release
 ninja
 sudo -E ninja install
 ```
-
-*Note:* For Ubuntu 16.04 & 14.04, you may need to run `meson` as `~/.local/bin/meson`
 
 # Running
 

@@ -4,7 +4,7 @@ summary:            icecream-sundae
 description:        |
   Command line monitor for Icecream distributed compiler
 
-base:               core18
+base:               core22
 grade:              stable
 confinement:        strict
 

@@ -91,7 +91,7 @@ private:
 };
 
 struct HostCache {
-    typedef std::vector<std::shared_ptr<HostCache> > List;
+    using List = std::vector<std::shared_ptr<HostCache> >;
 
     std::shared_ptr<Host> host;
     Job::Map pending_jobs;
@@ -517,6 +517,7 @@ void NCursesInterface::print_job_graph(Job::Map const &jobs, int max_host_jobs, 
             if (b.color == color && b.is_local == is_local) {
                 b.num_jobs++;
                 found_bin = true;
+                break;  // No need to continue once we found the matching bin
             }
         }
 
@@ -545,7 +546,7 @@ void NCursesInterface::print_job_graph(Job::Map const &jobs, int max_host_jobs, 
     }
 
     // Add a slot to the bin with the highest remainders until we run out of graph slots
-    std::sort(bins.begin(), bins.end(), [](Bin const& a, Bin const& b) -> bool { return a.remainder > b.remainder; });
+    std::sort(bins.begin(), bins.end(), [](Bin const& a, Bin const& b) { return a.remainder > b.remainder; });
     for (auto& b : bins) {
         if (used_graph_slots == active_graph_slots || b.remainder == 0)
             break;
@@ -558,7 +559,7 @@ void NCursesInterface::print_job_graph(Job::Map const &jobs, int max_host_jobs, 
 
     // Sort by color/local to keep the display ordering stable. Otherwise, it
     // jumps around unpleasantly.
-    std::sort(bins.begin(), bins.end(), [](Bin const& a, Bin const& b) -> bool {
+    std::sort(bins.begin(), bins.end(), [](Bin const& a, Bin const& b) {
         if (a.is_local != b.is_local)
             return a.is_local > b.is_local;
         return a.color < b.color;
@@ -919,7 +920,7 @@ void NCursesInterface::doRedraw()
 void NCursesInterface::triggerRedraw()
 {
     if (!idle_source.get())
-        idle_source.set(g_idle_add(reinterpret_cast<GSourceFunc>(on_idle_draw), this));
+        idle_source.set(g_idle_add(on_idle_draw, this));
 }
 
 int get_env_int(const char* var_name, int default_val) {

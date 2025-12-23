@@ -1,6 +1,6 @@
 /*
  * Command line Icecream status monitor
- * Copyright (C) 2018 by Garmin Ltd. or its subsidiaries.
+ * Copyright (C) 2018-2024 by Garmin Ltd. or its subsidiaries.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -101,34 +101,17 @@ Simulator::Simulator(std::uint_fast32_t seed, int cycles, int speed):
 template<typename T>
 std::shared_ptr<T> Simulator::chooseRandom(std::map<uint32_t, std::shared_ptr<T> > const &map)
 {
+    if (map.empty())
+        return nullptr;
+
     std::vector<std::shared_ptr<T> > items;
+    items.reserve(map.size());
     for (auto const &m : map)
         items.push_back(m.second);
-
-    if (!items.size())
-        return nullptr;
 
     std::uniform_int_distribution<> dis(0, items.size() - 1);
     return items[dis(random_generator)];
 }
-
-//void Simulator::addHost()
-//{
-//    auto h = Host::create(next_host_id++);
-//    {
-//        std::ostringstream ss;
-//        ss << "Host " << h->id;
-//        h->attr["Name"] = ss.str();
-//    }
-
-    // Poor man's normal distribution
-//    h->attr["MaxJobs"] = std::to_string(
-//            random_generator() % (MAX_HOST_JOBS / 2) + random_generator() % (MAX_HOST_JOBS / 2 - 1) + 1
-//            );
-//    h->attr["NoRemote"] = ((rand() % 10) == 0 ? "true" : "false");
-//    h->attr["Platform"] = "x86_64";
-//    h->attr["Speed"] = "100.000";
-//}
 
 void Simulator::addHost()
 {

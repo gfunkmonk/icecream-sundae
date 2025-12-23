@@ -306,30 +306,30 @@ static bool parse_args(int *argc, char ***argv)
         }
     };
 
-    static gchar *opt_scheduler = NULL;
-    static gchar *opt_netname = NULL;
+    static gchar *opt_scheduler = nullptr;
+    static gchar *opt_netname = nullptr;
     static gboolean opt_about = FALSE;
     static gboolean opt_version = FALSE;
 
     static const GOptionEntry opts[] =
     {
-        { "scheduler", 's', 0, G_OPTION_ARG_STRING, &opt_scheduler, "Icecream scheduler hostname", NULL },
-        { "netname", 'n', 0, G_OPTION_ARG_STRING, &opt_netname, "Icecream network name", NULL },
-        { "simulate", 0, 0, G_OPTION_ARG_NONE, &opt_simulate, "Simulate activity", NULL },
-        { "sim-seed", 0, 0, G_OPTION_ARG_INT, &opt_sim_seed, "Simulator seed", NULL },
-        { "sim-cycles", 0, 0, G_OPTION_ARG_INT, &opt_sim_cycles, "Number of simulator cycles to run. -1 for no limit", NULL },
-        { "sim-speed", 0, 0, G_OPTION_ARG_INT, &opt_sim_speed, "Simulator speed (milliseconds between cycles)", NULL },
-        { "anonymize", 0, 0, G_OPTION_ARG_NONE, &opt_anonymize, "Anonymize hosts and files (for demos)", NULL },
-        { "about", 0, 0, G_OPTION_ARG_NONE, &opt_about, "Show about", NULL },
-        { "version", 0, 0, G_OPTION_ARG_NONE, &opt_version, "Show version", NULL },
+        { "scheduler", 's', 0, G_OPTION_ARG_STRING, &opt_scheduler, "Icecream scheduler hostname", nullptr },
+        { "netname", 'n', 0, G_OPTION_ARG_STRING, &opt_netname, "Icecream network name", nullptr },
+        { "simulate", 0, 0, G_OPTION_ARG_NONE, &opt_simulate, "Simulate activity", nullptr },
+        { "sim-seed", 0, 0, G_OPTION_ARG_INT, &opt_sim_seed, "Simulator seed", nullptr },
+        { "sim-cycles", 0, 0, G_OPTION_ARG_INT, &opt_sim_cycles, "Number of simulator cycles to run. -1 for no limit", nullptr },
+        { "sim-speed", 0, 0, G_OPTION_ARG_INT, &opt_sim_speed, "Simulator speed (milliseconds between cycles)", nullptr },
+        { "anonymize", 0, 0, G_OPTION_ARG_NONE, &opt_anonymize, "Anonymize hosts and files (for demos)", nullptr },
+        { "about", 0, 0, G_OPTION_ARG_NONE, &opt_about, "Show about", nullptr },
+        { "version", 0, 0, G_OPTION_ARG_NONE, &opt_version, "Show version", nullptr },
         {}
     };
 
     std::unique_ptr<GOptionContext, GOptionContextDelete> context(g_option_context_new(nullptr));
 
-    g_option_context_add_main_entries(context.get(), opts, NULL);
+    g_option_context_add_main_entries(context.get(), opts, nullptr);
 
-    GError *error = NULL;
+    GError *error = nullptr;
     if (!g_option_context_parse(context.get(), argc, argv, &error)) {
         std::cout << "Option parsing failed: " << error->message << std::endl;
         g_clear_error(&error);
@@ -351,7 +351,7 @@ static bool parse_args(int *argc, char ***argv)
         std::cout << "Command line Icecream status monitor" << std::endl;
         std::cout << "Version: " << VERSION << std::endl;
         std::cout <<
-            "Copyright (C) 2018 by Garmin Ltd. or its subsidiaries." << std::endl <<
+            "Copyright (C) 2018-2024 by Garmin Ltd. or its subsidiaries." << std::endl <<
             std::endl <<
             "This program is free software; you can redistribute it and/or" << std::endl <<
             "modify it under the terms of the GNU General Public License" << std::endl <<
@@ -394,7 +394,7 @@ int main(int argc, char **argv)
 
     std::cout <<
         "Command line Icecream status monitor, Version " << VERSION << std::endl <<
-        "Copyright (C) 2018 by Garmin Ltd. or its subsidiaries." << std::endl <<
+        "Copyright (C) 2018-2024 by Garmin Ltd. or its subsidiaries." << std::endl <<
         "This is free software, and you are welcome to redistribute it" << std::endl <<
         "under certain conditions; run with '--about' for details." << std::endl;
 
@@ -414,8 +414,8 @@ int main(int argc, char **argv)
     if (input_fd >= 0)
         input_source.set(g_unix_fd_add(input_fd, G_IO_IN, process_input, nullptr));
 
-    GlibSource sigint_source(g_unix_signal_add(SIGINT, reinterpret_cast<GSourceFunc>(on_quit_signal), nullptr));
-    GlibSource sigterm_source(g_unix_signal_add(SIGTERM, reinterpret_cast<GSourceFunc>(on_quit_signal), nullptr));
+    GlibSource sigint_source(g_unix_signal_add(SIGINT, on_quit_signal, nullptr));
+    GlibSource sigterm_source(g_unix_signal_add(SIGTERM, on_quit_signal, nullptr));
 
     g_main_loop_run(main_loop);
 
