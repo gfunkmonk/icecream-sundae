@@ -919,7 +919,7 @@ void NCursesInterface::doRedraw()
 void NCursesInterface::triggerRedraw()
 {
     if (!idle_source.get())
-        idle_source.set(g_idle_add(reinterpret_cast<GSourceFunc>(on_idle_draw), this));
+        idle_source.set(g_idle_add(on_idle_draw, this));
 }
 
 int get_env_int(const char* var_name, int default_val) {
