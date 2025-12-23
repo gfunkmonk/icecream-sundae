@@ -91,7 +91,7 @@ private:
 };
 
 struct HostCache {
-    typedef std::vector<std::shared_ptr<HostCache> > List;
+    using List = std::vector<std::shared_ptr<HostCache> >;
 
     std::shared_ptr<Host> host;
     Job::Map pending_jobs;

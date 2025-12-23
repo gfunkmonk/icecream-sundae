@@ -32,8 +32,8 @@ extern bool all_expanded;
 struct Host;
 
 struct Job {
-    typedef std::map<uint32_t, std::shared_ptr<Job> > Map;
-    typedef std::vector<std::shared_ptr<Job> > List;
+    using Map = std::map<uint32_t, std::shared_ptr<Job> >;
+    using List = std::vector<std::shared_ptr<Job> >;
 
     virtual ~Job() {}
 
@@ -73,10 +73,10 @@ private:
 };
 
 struct Host {
-    typedef std::map<uint32_t, std::shared_ptr<Host> > Map;
-    typedef std::vector<std::shared_ptr<Host> > List;
+    using Map = std::map<uint32_t, std::shared_ptr<Host> >;
+    using List = std::vector<std::shared_ptr<Host> >;
 
-    typedef std::map<std::string, std::string> Attributes;
+    using Attributes = std::map<std::string, std::string>;
 
     virtual ~Host() {}
 
