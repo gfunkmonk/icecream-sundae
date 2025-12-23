@@ -533,7 +533,6 @@ void NCursesInterface::print_job_graph(Job::Map const &jobs, int max_host_jobs, 
     // event it would exceed the allocated space.
     max_host_jobs = std::max(total_active_jobs, max_host_jobs);
 
-    //int active_graph_slots = ceil(max_graph_jobs * total_active_jobs / (double)max_host_jobs);
     int active_graph_slots = ceil(max_graph_jobs * total_active_jobs / static_cast<double>(max_host_jobs));
     int used_graph_slots = 0;
 
@@ -867,7 +866,6 @@ void NCursesInterface::doRender()
                 }
 
                 if (job) {
-                    //printw("(%5.1lfs) ", (double)((g_get_monotonic_time() - job->start_time) / 1000000.0));
                     printw("(%5.1f s) ", static_cast<double>(g_get_monotonic_time() - job->start_time) / 1000000.0);
 
                     int color = 0;
