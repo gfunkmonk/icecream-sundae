@@ -17,7 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include "config.h"
+#include <glib.h>
+#include <glib-unix.h>
 
 #include <cassert>
 #include <algorithm>
@@ -25,9 +26,8 @@
 #include <memory>
 #include <iostream>
 #include <map>
-#include <glib.h>
-#include <glib-unix.h>
 
+#include "config.h"
 #include "main.hpp"
 #include "draw.hpp"
 #include "scheduler.hpp"

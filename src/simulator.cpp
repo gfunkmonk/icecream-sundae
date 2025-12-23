@@ -17,8 +17,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <random>
 #include <glib.h>
+#include <random>
+
+#include <string>
+#include <map>
+#include <vector>
 
 #include "simulator.hpp"
 #include "main.hpp"
@@ -32,8 +36,8 @@ public:
     Simulator(std::uint_fast32_t seed, int cycles, int speed);
     virtual ~Simulator() {}
 
-    virtual std::string getNetName() const override { return "ICECREAM"; }
-    virtual std::string getSchedulerName() const override { return "simulator"; }
+    std::string getNetName() const override { return "ICECREAM"; }
+    std::string getSchedulerName() const override { return "simulator"; }
 
 private:
     static gboolean process_simulator(gpointer user_data);
@@ -108,20 +112,44 @@ std::shared_ptr<T> Simulator::chooseRandom(std::map<uint32_t, std::shared_ptr<T>
     return items[dis(random_generator)];
 }
 
+//void Simulator::addHost()
+//{
+//    auto h = Host::create(next_host_id++);
+//    {
+//        std::ostringstream ss;
+//        ss << "Host " << h->id;
+//        h->attr["Name"] = ss.str();
+//    }
+
+    // Poor man's normal distribution
+//    h->attr["MaxJobs"] = std::to_string(
+//            random_generator() % (MAX_HOST_JOBS / 2) + random_generator() % (MAX_HOST_JOBS / 2 - 1) + 1
+//            );
+//    h->attr["NoRemote"] = ((rand() % 10) == 0 ? "true" : "false");
+//    h->attr["Platform"] = "x86_64";
+//    h->attr["Speed"] = "100.000";
+//}
+
 void Simulator::addHost()
 {
     auto h = Host::create(next_host_id++);
-    {
-        std::ostringstream ss;
-        ss << "Host " << h->id;
-        h->attr["Name"] = ss.str();
-    }
 
-    // Poor man's normal distribution
-    h->attr["MaxJobs"] = std::to_string(
-            random_generator() % (MAX_HOST_JOBS / 2) + random_generator() % (MAX_HOST_JOBS / 2 - 1) + 1
-            );
-    h->attr["NoRemote"] = ((rand() % 10) == 0 ? "true" : "false");
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+
+    h->attr["Name"] = "Host " + std::to_string(h->id);
+
+    double mean = MAX_HOST_JOBS / 2.0;
+    double stddev = MAX_HOST_JOBS / 6.0;
+    std::normal_distribution<double> dist_jobs(mean, stddev);
+
+    int jobs = static_cast<int>(std::round(dist_jobs(gen)));
+    jobs = std::max(1, std::min(MAX_HOST_JOBS, jobs));
+    h->attr["MaxJobs"] = std::to_string(jobs);
+
+    std::bernoulli_distribution dist_no_remote(0.1);
+    h->attr["NoRemote"] = dist_no_remote(gen) ? "true" : "false";
+
     h->attr["Platform"] = "x86_64";
     h->attr["Speed"] = "100.000";
 }

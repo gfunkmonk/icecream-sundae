@@ -17,13 +17,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <memory>
-#include <iostream>
-
 #include <glib.h>
 #include <glib-unix.h>
 #include <icecc/comm.h>
 #include <poll.h>
+
+#include <memory>
+#include <iostream>
 
 #include "main.hpp"
 #include "scheduler.hpp"
@@ -37,8 +37,8 @@ public:
 
     virtual ~IcecreamScheduler() {}
 
-    virtual std::string getNetName() const override { return current_net_name; }
-    virtual std::string getSchedulerName() const override { return current_scheduler_name; }
+    std::string getNetName() const override { return current_net_name; }
+    std::string getSchedulerName() const override { return current_scheduler_name; }
 
 private:
     static gboolean scheduler_process(gint fd, GIOCondition condition, gpointer);

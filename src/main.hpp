@@ -19,13 +19,13 @@
 
 #pragma once
 
+#include <glib.h>
 #include <cstdint>
 #include <map>
 #include <memory>
 #include <string>
 #include <vector>
 #include <sstream>
-#include <glib.h>
 
 extern bool all_expanded;
 
@@ -181,7 +181,7 @@ public:
     Scheduler() {}
     virtual ~Scheduler() {}
 
-    virtual void onInput(int) {};
+    virtual void onInput(int) {}
 
     virtual std::string getNetName() const = 0;
     virtual std::string getSchedulerName() const = 0;

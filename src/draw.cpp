@@ -17,21 +17,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <algorithm>
-#include <cstdint>
-#include <functional>
-#include <string>
-#include <iomanip>
-#include <map>
-#include <memory>
-#include <unordered_set>
-#include <iomanip>
-
 #include <assert.h>
 #include <glib.h>
 #include <glib-unix.h>
 #include <math.h>
 #include <ncurses.h>
+
+#include <algorithm>
+#include <cstdint>
+#include <functional>
+#include <string>
+#include <map>
+#include <memory>
+#include <unordered_set>
+#include <iomanip>
 #include <cstdlib>
 
 #include "main.hpp"
@@ -45,18 +44,18 @@ public:
     NCursesInterface();
     virtual ~NCursesInterface();
 
-    virtual void triggerRedraw() override;
-    virtual int processInput() override;
+    void triggerRedraw() override;
+    int processInput() override;
 
-    virtual int getInputFd() override
+    int getInputFd() override
     {
         return STDIN_FILENO;
     }
 
-    virtual void suspend() override;
-    virtual void resume() override;
+    void suspend() override;
+    void resume() override;
 
-    virtual void set_anonymize(bool a) override
+    void set_anonymize(bool a) override
     {
         anonymize = a;
     }
@@ -102,7 +101,7 @@ struct HostCache {
 
 class Attr {
     public:
-        Attr(int a, bool on=true) : m_attr(a), m_on(false)
+        explicit Attr(int a, bool on=true) : m_attr(a), m_on(false)
         {
             setOn(on);
         }
@@ -195,12 +194,12 @@ class NameColumn: public Column {
         explicit NameColumn(const NCursesInterface *const interface): Column(interface) {}
         virtual ~NameColumn() {}
 
-        virtual std::string getHeader() const override
+        std::string getHeader() const override
         {
             return "NAME";
         }
 
-        virtual void output(int row, int column, int /* width */, const std::shared_ptr<const HostCache> &host) const override
+        void output(int row, int column, int /* width */, const std::shared_ptr<const HostCache> &host) const override
         {
             move(row, column);
             {
@@ -209,7 +208,7 @@ class NameColumn: public Column {
             }
         }
 
-        virtual Compare get_compare() const override
+        Compare get_compare() const override
         {
             return [](const HostCache &a, const HostCache &b) {
                 return a.host->getName() < b.host->getName();
@@ -217,7 +216,7 @@ class NameColumn: public Column {
         }
 
     protected:
-        virtual std::string getOutputString(const std::shared_ptr<const HostCache> &host) const override
+        std::string getOutputString(const std::shared_ptr<const HostCache> &host) const override
         {
             std::ostringstream ss;
             if (m_interface->get_anonymize()) {
@@ -241,7 +240,7 @@ class JobsColumn: public Column {
         explicit JobsColumn(const NCursesInterface *const interface): Column(interface) {}
         virtual ~JobsColumn() {}
 
-        virtual std::pair<size_t, size_t> getWidthConstraint(HostCache::List const &hosts) const override
+        std::pair<size_t, size_t> getWidthConstraint(HostCache::List const &hosts) const override
         {
             size_t min_width = getHeader().size();
             size_t desired_width = min_width;
@@ -252,18 +251,18 @@ class JobsColumn: public Column {
             return std::pair<size_t, size_t>(min_width, desired_width);
         }
 
-        virtual std::string getHeader() const override
+        std::string getHeader() const override
         {
             return "JOBS";
         }
 
-        virtual void output(int row, int column, int width, const std::shared_ptr<const HostCache> &host) const override
+        void output(int row, int column, int width, const std::shared_ptr<const HostCache> &host) const override
         {
             move(row, column);
             m_interface->print_job_graph(host->current_jobs, host->host->getMaxJobs(), width);
         }
 
-        virtual Compare get_compare() const override
+        Compare get_compare() const override
         {
             return [](const HostCache &a, const HostCache &b) {
                 return a.current_jobs.size() < b.current_jobs.size();
@@ -381,8 +380,8 @@ public:
     explicit SpeedColumn(const NCursesInterface *nc) : SimpleColumn(nc, "SPEED", 8, &_stream, &_compare) {}
 };
 
-static const std::string local_job_track("abcdefghijklmnopqrstuvwxyz");
-static const std::string remote_job_track("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+static const char local_job_track[] = "abcdefghijklmnopqrstuvwxyz";
+static const char remote_job_track[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 int NCursesInterface::processInput()
 {
@@ -534,7 +533,8 @@ void NCursesInterface::print_job_graph(Job::Map const &jobs, int max_host_jobs, 
     // event it would exceed the allocated space.
     max_host_jobs = std::max(total_active_jobs, max_host_jobs);
 
-    int active_graph_slots = ceil(max_graph_jobs * total_active_jobs / (double)max_host_jobs);
+    //int active_graph_slots = ceil(max_graph_jobs * total_active_jobs / (double)max_host_jobs);
+    int active_graph_slots = ceil(max_graph_jobs * total_active_jobs / static_cast<double>(max_host_jobs));
     int used_graph_slots = 0;
 
     // Calculate the whole and remainder slots for each bin
@@ -842,7 +842,7 @@ void NCursesInterface::doRender()
                 move(row, 2);
                 {
                     Attr bold(A_BOLD);
-                    printw("Job %d: ", i + 1);
+                    printw("Job %zu: ", i + 1);
                 }
 
                 std::shared_ptr<Job> job;
@@ -867,7 +867,8 @@ void NCursesInterface::doRender()
                 }
 
                 if (job) {
-                    printw("(%5.1lfs) ", (double)((g_get_monotonic_time() - job->start_time) / 1000000.0));
+                    //printw("(%5.1lfs) ", (double)((g_get_monotonic_time() - job->start_time) / 1000000.0));
+                    printw("(%5.1f s) ", static_cast<double>(g_get_monotonic_time() - job->start_time) / 1000000.0);
 
                     int color = 0;
                     auto const h = job->getClient();
