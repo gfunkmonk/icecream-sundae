@@ -20,6 +20,7 @@
 #include <glib.h>
 #include <random>
 
+#include <algorithm>
 #include <string>
 #include <map>
 #include <vector>

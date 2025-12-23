@@ -32,6 +32,8 @@
 #include <unordered_set>
 #include <iomanip>
 #include <cstdlib>
+#include <vector>
+#include <utility>
 
 #include "main.hpp"
 #include "draw.hpp"
