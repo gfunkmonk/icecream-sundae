@@ -1,8 +1,9 @@
-icecream-sundae (1.1.0-1) UNRELEASED; urgency=medium
+icecream-sundae (1.1.1-1) UNRELEASED; urgency=medium
 
   * update
+  * colors n stuff
 
- -- root <root@bitch.srv>  Fri, 12 Dec 2025 18:53:28 -0500
+ -- root <root@bitch.srv>  Tue, 23 Dec 2025 23:37:15 -0500
 
 icecream-sundae (1.0.0-3build2) noble; urgency=medium
 

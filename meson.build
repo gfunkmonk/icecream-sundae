@@ -1,13 +1,20 @@
 project('icecream-sundae', 'cpp',
-        version: '1.1.0',
-        meson_version: '>= 0.31.0',
-        default_options: [
-            'buildtype=debugoptimized',
-            'cpp_std=c++20',
-            'warning_level=3',
-            'b_ndebug=true',
-            'strip=true',
-            ])
+    version: '1.1.1',
+    meson_version: '>= 0.31.0',
+    default_options: [
+        'buildtype=release',
+        'cpp_std=c++20',
+        'warning_level=3',
+        'b_ndebug=true',
+        'strip=true',
+        'b_lto=true',
+        'build.cpp_std=c++20',
+        'optimization=3',
+        'b_colorout=auto',
+        'b_pie=true',
+        'prefix=/usr',
+        'sysconfdir=/etc',
+    ])
 
 icecc = dependency('icecc')
 glib = dependency('glib-2.0')
@@ -19,7 +26,9 @@ cxx = meson.get_compiler('cpp')
 
 libdl = cxx.find_library('dl')
 
-deps = [icecc, glib, ncurses, libdl]
+libzstd = cxx.find_library('zstd')
+
+deps = [icecc, glib, ncurses, libdl, libzstd]
 
 code = '''
 #include <icecc/comm.h>
@@ -43,7 +52,7 @@ endif
 
 incdir = include_directories('src')
 
-code  = '''
+code = '''
 #include <icecc/comm.h>
 #include <memory>
 
@@ -68,17 +77,17 @@ icecream_sundae = executable('icecream-sundae',
     ['src/main.cpp', 'src/draw.cpp', 'src/scheduler.cpp', 'src/simulator.cpp'],
     include_directories: incdir,
     dependencies: deps,
-    install : true,
+    install: true,
     cpp_args: ncurses_cxxflag
-    )
+)
 
 install_data('icecream-sundae.desktop',
     install_dir: join_paths(get_option('datadir'), 'applications')
-    )
+)
 
 # A pretty dumb test right now. Simply run the simulator with a known key for a
 # fixed number of iterations and see if anything breaks
 test('Random simulator test', icecream_sundae, is_parallel: false,
     args: ['--simulate', '--sim-seed=123456', '--sim-cycles=10000', '--sim-speed=1'],
     env: ['ASAN_OPTIONS=detect_leaks=1:leak_check_at_exit=true:verbosity=1', 'TERM=dumb'],
-    )
+)
