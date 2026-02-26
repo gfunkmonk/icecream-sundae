@@ -17,10 +17,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#include <assert.h>
+#include <cassert>
 #include <glib.h>
 #include <glib-unix.h>
-#include <math.h>
+#include <cmath>
 #include <ncurses.h>
 
 #include <algorithm>
@@ -945,7 +945,7 @@ void NCursesInterface::init()
 
     Host::clearColors();
     unsigned color_id = 8;  // The last ncurses predefined color
-    for (auto color: all_colors) {
+    for (auto const& color : all_colors) {
         init_color(color_id, std::get<0>(color), std::get<1>(color), std::get<2>(color));
         Host::addColor(assign_color(color_id, -1));
         color_id++;
